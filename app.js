@@ -6,9 +6,11 @@ const port = 3000
 const mongoose = require("mongoose")
 // 設定好models/account.js後載入
 const Record = require("./models/record")
+// 載入handlebars模組
+const exhbs = require("express-handlebars")
 
 // mongoose 連線設定
-mongoose.connect("mongodb://localhost/account", { useNewUrlParser: true })
+mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true })
 // 連結mongodb後，透過mongoose.connection取得Connection物件
 const db = mongoose.connection
 // 連結異常
@@ -20,13 +22,21 @@ db.once("open", () => {
   console.log("Connect success!!")
 })
 
+// handlebars 設定
+app.engine("handlebars", exhbs({ defaultLayout: "main" }))
+app.set("view engine", "handlebars")
+
 
 // 路由設定
 app.get("/", (req, res) => {
-  res.send("首頁")
+  Record.find((err, records) => {
+    if (err) return console.error(err)
+    return res.render("index", { records: records })
+  })
 })
+
 app.get("/records", (req, res) => {
-  res.send("瀏覽所有支出紀錄")
+  res.render("/")
 })
 app.get("/records/:id/edit", (req, res) => {
   res.send("修改頁面")
