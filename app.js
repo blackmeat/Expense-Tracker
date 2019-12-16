@@ -8,6 +8,8 @@ const mongoose = require("mongoose")
 const Record = require("./models/record")
 // 載入handlebars模組
 const exhbs = require("express-handlebars")
+// 載入body-parser模組
+const bodyParser = require("body-parser")
 
 // mongoose 連線設定
 mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true })
@@ -26,9 +28,13 @@ db.once("open", () => {
 app.engine("handlebars", exhbs({ defaultLayout: "main" }))
 app.set("view engine", "handlebars")
 
+// body-parser 設定
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 // 路由設定
 app.get("/", (req, res) => {
+  // 找出database所有種子資料放進records參數
   Record.find((err, records) => {
     if (err) return console.error(err)
     return res.render("index", { records: records })
@@ -38,18 +44,30 @@ app.get("/", (req, res) => {
 app.get("/records", (req, res) => {
   res.render("/")
 })
+app.get("/records/new", (req, res) => {
+  res.render("new")
+})
+app.post("/records", (req, res) => {
+  console.log(req.body)
+  const record = new Record({
+    name: req.body.name,
+    money: req.body.money,
+    category: req.body.category
+  })
+  record.save(err => {
+    if (err) return console.error(err)
+    return res.redirect("/")
+  })
+
+})
 app.get("/records/:id/edit", (req, res) => {
   res.send("修改頁面")
 })
 app.post("/records/:id", (req, res) => {
   res.send("修改完成送出")
 })
-app.get("/records/new", (req, res) => {
-  res.send("新增支出項目頁面")
-})
-app.post("/records", (req, res) => {
-  res.send("新增項目送出")
-})
+
+
 app.post("/records/:id/delete", (req, res) => {
   res.send("刪除支出項目")
 })
