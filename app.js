@@ -5,7 +5,7 @@ const port = 3000
 // 載入mongoose模組
 const mongoose = require("mongoose")
 // 設定好models/account.js後載入
-const Account = require("./models/account")
+const Record = require("./models/record")
 
 // mongoose 連線設定
 mongoose.connect("mongodb://localhost/account", { useNewUrlParser: true })
