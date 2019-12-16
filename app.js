@@ -23,7 +23,25 @@ db.once("open", () => {
 
 // 路由設定
 app.get("/", (req, res) => {
-  res.send("HI")
+  res.send("首頁")
+})
+app.get("/records", (req, res) => {
+  res.send("瀏覽所有支出紀錄")
+})
+app.get("/records/:id/edit", (req, res) => {
+  res.send("修改頁面")
+})
+app.post("/records/:id", (req, res) => {
+  res.send("修改完成送出")
+})
+app.get("/records/new", (req, res) => {
+  res.send("新增支出項目頁面")
+})
+app.post("/records", (req, res) => {
+  res.send("新增項目送出")
+})
+app.post("/records/:id/delete", (req, res) => {
+  res.send("刪除支出項目")
 })
 
 
