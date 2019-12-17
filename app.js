@@ -35,10 +35,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // 路由設定
 app.get("/", (req, res) => {
   // 找出database所有種子資料放進records參數
-  Record.find((err, records) => {
-    if (err) return console.error(err)
-    return res.render("index", { records: records })
-  })
+  Record
+    .find({})
+    .sort({ name: "asc" })
+    .exec((err, records) => {
+      if (err) return console.error(err)
+      return res.render("index", { records: records })
+    })
 })
 
 app.get("/records", (req, res) => {
