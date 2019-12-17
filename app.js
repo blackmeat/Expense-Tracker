@@ -2,15 +2,15 @@
 const express = require("express")
 const app = express()
 const port = 3000
-// 載入mongoose模組
+// 載入mongoose模組 (與資料庫連結)
 const mongoose = require("mongoose")
 // 設定好models/account.js後載入
 const Record = require("./models/record")
-// 載入handlebars模組
+// 載入handlebars模組（模板）
 const exhbs = require("express-handlebars")
-// 載入body-parser模組
+// 載入body-parser模組 (取得表單送出內容)
 const bodyParser = require("body-parser")
-// 載入method-override模組
+// 載入method-override模組（符合RESTful路由)
 const methodOverride = require("method-override")
 
 // mongoose 連線設定
@@ -38,66 +38,11 @@ app.use(methodOverride("_method"))
 
 
 // 路由設定
-app.get("/", (req, res) => {
-  // 找出database所有種子資料放進records參數
-  Record
-    .find({})
-    .sort({ name: "asc" })
-    .exec((err, records) => {
-      if (err) return console.error(err)
-      return res.render("index", { records: records })
-    })
-})
+app.use("/", require("./routes/home"))
+app.use("/records", require("./routes/record"))
 
-app.get("/records", (req, res) => {
-  res.render("/")
-})
-app.get("/records/new", (req, res) => {
-  res.render("new")
-})
-app.post("/records", (req, res) => {
-  console.log(req.body)
-  const record = new Record({
-    name: req.body.name,
-    money: req.body.money,
-    category: req.body.category,
-    date: req.body.date
-  })
-  record.save(err => {
-    if (err) return console.error(err)
-    return res.redirect("/")
-  })
 
-})
-app.get("/records/:id/edit", (req, res) => {
-  Record.findById(req.params.id, (err, records) => {
-    if (err) return console.error(err)
-    return res.render("edit", { records: records })
-  })
-})
-app.put("/records/:id", (req, res) => {
-  Record.findById(req.params.id, (err, records) => {
-    if (err) return console.error(err)
-    records.name = req.body.name
-    records.money = req.body.money
-    records.category = req.body.category
-    records.date = req.body.date
-    records.save(err => {
-      if (err) return console.error(err)
-      return res.redirect("/")
-    })
-  })
-})
 
-app.delete("/records/:id/delete", (req, res) => {
-  Record.findById(req.params.id, (err, records) => {
-    if (err) return console.error(err)
-    records.remove(err => {
-      if (err) return console.error(err)
-      return res.redirect("/")
-    })
-  })
-})
 
 
 // 設置監聽啟動伺服器
