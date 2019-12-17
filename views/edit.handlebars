@@ -1,11 +1,11 @@
 <div>
   <div class="text-center my-4">
-    <h3>請輸入你的支出</h3>
+    <h3>請修改你的支出</h3>
   </div>
-  <form action="/records" method="POST">
+  <form action="/records/{{records.id}}" method="POST">
     <div class="form-group">
       <label>名稱</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="支出名稱">
+      <input type="text" class="form-control" id="name" name="name" placeholder="支出名稱" value="{{records.name}}">
     </div>
 
     <div class="form-group">
@@ -17,7 +17,7 @@
       <label>類別</label>
 
 
-      <select class="custom-select my-1 mr-sm-3" id="category" name="category" required>
+      <select class="custom-select my-1 mr-sm-3" id="category" name="category" required value="{{records.category}}">
         <option selected>請選擇</option>
         <option value="家居物業">家居物業</option>
         <option value="交通出行">交通出行</option>
@@ -31,11 +31,11 @@
 
     <div class="form-group">
       <label>金額</label>
-      <input type="number" class="form-control" id="money" name="money" placeholder="支出金額">
+      <input type="number" class="form-control" id="money" name="money" placeholder="支出金額" value="{{records.money}}">
     </div>
 
     <div class="text-center">
-      <button type="submit">新增支出</button>
+      <button type="submit">修改完成</button>
     </div>
   </form>
 </div>

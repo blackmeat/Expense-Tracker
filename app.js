@@ -61,10 +61,23 @@ app.post("/records", (req, res) => {
 
 })
 app.get("/records/:id/edit", (req, res) => {
-  res.send("修改頁面")
+  Record.findById(req.params.id, (err, records) => {
+    if (err) return console.error(err)
+    return res.render("edit", { records: records })
+  })
 })
 app.post("/records/:id", (req, res) => {
-  res.send("修改完成送出")
+  Record.findById(req.params.id, (err, records) => {
+    if (err) return console.error(err)
+    records.name = req.body.name
+    records.money = req.body.money
+    records.category = req.body.category
+    records.date = req.body.date
+    records.save(err => {
+      if (err) return console.error(err)
+      return res.redirect("/")
+    })
+  })
 })
 
 

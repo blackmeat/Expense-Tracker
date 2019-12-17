@@ -2,7 +2,7 @@
   {{#each records}}
   <li>
     {{{this.name}}} {{this.money}}
-    <a href="#">edit</a>
+    <a href="/records/{{this.id}}/edit">edit</a>
     <button type="submit">delete</button>
   </li>
   {{/each}}
