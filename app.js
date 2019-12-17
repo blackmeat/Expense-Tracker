@@ -10,6 +10,8 @@ const Record = require("./models/record")
 const exhbs = require("express-handlebars")
 // 載入body-parser模組
 const bodyParser = require("body-parser")
+// 載入method-override模組
+const methodOverride = require("method-override")
 
 // mongoose 連線設定
 mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true })
@@ -30,6 +32,9 @@ app.set("view engine", "handlebars")
 
 // body-parser 設定
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// method-override 設定
+app.use(methodOverride("_method"))
 
 
 // 路由設定
@@ -70,7 +75,7 @@ app.get("/records/:id/edit", (req, res) => {
     return res.render("edit", { records: records })
   })
 })
-app.post("/records/:id", (req, res) => {
+app.put("/records/:id", (req, res) => {
   Record.findById(req.params.id, (err, records) => {
     if (err) return console.error(err)
     records.name = req.body.name
@@ -84,7 +89,7 @@ app.post("/records/:id", (req, res) => {
   })
 })
 
-app.post("/records/:id/delete", (req, res) => {
+app.delete("/records/:id/delete", (req, res) => {
   Record.findById(req.params.id, (err, records) => {
     if (err) return console.error(err)
     records.remove(err => {

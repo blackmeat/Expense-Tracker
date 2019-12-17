@@ -3,7 +3,7 @@
   <li class="row">
     {{{this.name}}} {{this.money}}
     <a href="/records/{{this.id}}/edit" class="px-3">edit</a>
-    <form action="/records/{{this.id}}/delete" method="POST">
+    <form action="/records/{{this.id}}/delete?_method=DELETE" method="POST">
       <button type="submit">delete</button>
     </form>
   </li>
