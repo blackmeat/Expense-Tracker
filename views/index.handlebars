@@ -1,9 +1,11 @@
 <ul>
   {{#each records}}
-  <li>
+  <li class="row">
     {{{this.name}}} {{this.money}}
-    <a href="/records/{{this.id}}/edit">edit</a>
-    <button type="submit">delete</button>
+    <a href="/records/{{this.id}}/edit" class="px-3">edit</a>
+    <form action="/records/{{this.id}}/delete" method="POST">
+      <button type="submit">delete</button>
+    </form>
   </li>
   {{/each}}
 </ul>

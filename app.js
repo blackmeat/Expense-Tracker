@@ -52,7 +52,8 @@ app.post("/records", (req, res) => {
   const record = new Record({
     name: req.body.name,
     money: req.body.money,
-    category: req.body.category
+    category: req.body.category,
+    date: req.body.date
   })
   record.save(err => {
     if (err) return console.error(err)
@@ -80,9 +81,14 @@ app.post("/records/:id", (req, res) => {
   })
 })
 
-
 app.post("/records/:id/delete", (req, res) => {
-  res.send("刪除支出項目")
+  Record.findById(req.params.id, (err, records) => {
+    if (err) return console.error(err)
+    records.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect("/")
+    })
+  })
 })
 
 
