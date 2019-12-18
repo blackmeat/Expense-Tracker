@@ -43,8 +43,6 @@ app.use("/records", require("./routes/record"))
 
 
 
-
-
 // 設置監聽啟動伺服器
 app.listen(port, () => {
   console.log("App is running!!")
