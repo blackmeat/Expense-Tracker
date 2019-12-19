@@ -4,9 +4,9 @@ const app = express()
 const port = 3000
 // 載入mongoose模組 (與資料庫連結)
 const mongoose = require("mongoose")
-// 設定好models/account.js後載入
+// 設定好Schema後載入
 const Record = require("./models/record")
-// 載入handlebars模組（模板）
+// 載入handlebars模組（template模板）
 const exhbs = require("express-handlebars")
 // 載入body-parser模組 (取得表單送出內容)
 const bodyParser = require("body-parser")
@@ -40,6 +40,7 @@ app.use(methodOverride("_method"))
 // 路由設定
 app.use("/", require("./routes/home"))
 app.use("/records", require("./routes/record"))
+app.use("/users", require("./routes/user"))
 
 
 
