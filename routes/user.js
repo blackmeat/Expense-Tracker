@@ -37,10 +37,8 @@ router.post("/register", (req, res) => {
           res.redirect("/login")
         })
         .catch(err => console.log(err))
-
     }
   })
-
 })
 
 

@@ -12,6 +12,8 @@ const exhbs = require("express-handlebars")
 const bodyParser = require("body-parser")
 // 載入method-override模組（符合RESTful路由)
 const methodOverride = require("method-override")
+// 載入session模組 （session & cookie）
+const session = require("express-session")
 
 // mongoose 連線設定
 mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true })
@@ -35,6 +37,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // method-override 設定
 app.use(methodOverride("_method"))
+
+// session 設定
+app.use(session({
+  secret: "12345",
+  resave: false,
+  saveUninitialized: true
+}))
 
 
 // 路由設定
