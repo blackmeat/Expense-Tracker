@@ -19,7 +19,7 @@ const passport = require("passport")
 
 
 // mongoose 連線設定
-mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true })
+mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true, useCreateIndex: true })
 // 連結mongodb後，透過mongoose.connection取得Connection物件
 const db = mongoose.connection
 // 連結異常

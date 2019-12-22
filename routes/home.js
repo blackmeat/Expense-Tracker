@@ -7,7 +7,7 @@ const { authenticated } = require("../config/auth")
 router.get("/", authenticated, (req, res) => {
   // 找出database所有種子資料放進records參數
   Record
-    .find({})
+    .find({ userId: req.user._id })
     .sort({ name: "asc" })
     .exec((err, records) => {
       if (err) return console.error(err)
