@@ -17,10 +17,15 @@
   <header>
     <nav class="navbar navbar-light bg-light">
       <a class="navbar-brand" href="/" style="font-size: 24px;">Expense Tracker</a>
-      <div>
-        <button class="btn btn-light border border-dark mr-3 px-3">
-          <a class="text-secondary" style="font-size: larger;" href="/users/login">Sign In</a>
-        </button>
+      {{#if isAuthenticated}}
+      <button class="btn btn-light border border-dark mr-3 px-3">
+        <a class="text-secondary" style="font-size: larger;" href="/users/login">Logout</a>
+      </button>
+      {{else}}
+      <button class="btn btn-light border border-dark mr-3 px-3">
+        <a class="text-secondary" style="font-size: larger;" href="/users/login">Sign In</a>
+      </button>
+      {{/if}}
     </nav>
   </header>
 
