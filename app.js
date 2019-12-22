@@ -14,6 +14,9 @@ const bodyParser = require("body-parser")
 const methodOverride = require("method-override")
 // 載入session模組 （session & cookie）
 const session = require("express-session")
+// 載入passport模組 （登入驗證）
+const passport = require("passport")
+
 
 // mongoose 連線設定
 mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true })
@@ -44,6 +47,15 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
+
+// passport 設定
+app.use(passport.initialize())
+app.use(passport.session())
+require("./config/passport")(passport)
+app.use((req, res, next) => {
+  req.locals.user = req.user
+  next()
+})
 
 
 // 路由設定
