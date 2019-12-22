@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../models/user")
+const passport = require("passport")
 
 router.get("/login", (req, res) => {
   res.render("login")
@@ -9,8 +10,9 @@ router.get("/login", (req, res) => {
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/login"
+    failureRedirect: "/users/login"
   })(req, res, next)
+
 })
 
 router.get("/register", (req, res) => {
@@ -22,7 +24,7 @@ router.post("/register", (req, res) => {
   User.findOne({ email: email }).then(user => {
     if (user) {
       console.log("This email already register!!")
-      return res.render("register", {
+      res.render("register", {
         name,
         email,
         password,
@@ -37,7 +39,7 @@ router.post("/register", (req, res) => {
       newUser
         .save()
         .then(user => {
-          res.redirect("/login")
+          res.redirect("/")
         })
         .catch(err => console.log(err))
     }
