@@ -21,6 +21,7 @@ module.exports = passport => {
         })
       })
     }))
+  // Session
   passport.serializeUser((user, done) => {
     done(null, user.id)
   })
