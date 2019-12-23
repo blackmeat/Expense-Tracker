@@ -4,7 +4,7 @@
     <div class="text-center mb-4">
       <h2>Sign In</h2>
     </div>
-
+    {{> messages}}
     <form action="/users/login" method="POST" style="font-size: 20px;">
 
       <div class="form-group">
@@ -22,8 +22,25 @@
         <button type="submit" class="btn btn-primary px-4">Login</button>
       </div>
 
-    </form>
 
-    <p style="font-size: 20px;">No Account ? <span><a href="/users/register">Register Here</a></span></p>
+
+    </form>
+    <div class="row">
+      <div class="col-auto mr-auto">
+        <p style="font-size: 20px;">No Account ? <span><a href="/users/register">Register Here</a></span></p>
+      </div>
+
+      <div>
+        <p style="font-size: 20px;">Another Login</p>
+
+        <a href="/auth/facebook" class="ml-4 mr-1 btn btn-primary">
+          <i class="fab fa-facebook-f" style="color:white;font-size:15px"></i>
+        </a>
+        <a href="/auth/google" class="btn btn-primary">
+          <i class="fab fa-google" style="color:white;font-size:12px"></i>
+        </a>
+
+      </div>
+    </div>
   </div>
 </div>

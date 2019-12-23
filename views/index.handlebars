@@ -15,7 +15,7 @@
       <p style="font-size: large;">總金額：</p>
     </div>
     <div style="float:right">
-      <h1>200</h1>
+      <h1>{{totalMoney}}</h1>
     </div>
   </div>
 </div>
@@ -26,16 +26,26 @@
     <div>
       <li class="list-group-item mb-4">
         <div class="row" style="padding:-5px; height:40px">
+
+          <!-- left part -->
           <div class="col-auto mr-auto ">
-            <div class="mr-3" style="float:left; color:#0080FF; font-size:35px"><i class="fas fa-home"></i></div>
+            <!-- icon -->
+            <div class="mr-3" style="float:left; color:#0080FF; font-size:35px">
+              <i class="fas fa-home"></i>
+            </div>
+            <!-- name -->
             <div class="mr-3" style="float:left;">
-              <p style="font-size: 30px;">{{this.name}}</p>
+              <p style="font-size: 30px">{{this.name}}</p>
             </div>
           </div>
-          <div class="row col-auto ">
-            <div class="mr-3">
+
+          <!-- right part -->
+          <div class=" row col-auto ">
+            <!-- money -->
+            <div class=" mr-3">
               <p style="font-size: 25px;">{{this.money}}$</p>
             </div>
+            <!-- edit & delete -->
             <div>
               <a href="/records/{{this.id}}/edit" class="px-3 btn btn-light text-dark border-dark mr-1">修改</a>
             </div>
@@ -43,6 +53,7 @@
               <button type="submit" class="btn btn-dark">刪除</button>
             </form>
           </div>
+
         </div>
       </li>
     </div>

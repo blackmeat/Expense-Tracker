@@ -12,7 +12,7 @@ const recordSchema = new Schema({
   },
   date: {
     type: Date,
-    default: Date
+    requied: true
   },
   money: {
     type: Number,
@@ -23,7 +23,7 @@ const recordSchema = new Schema({
     ref: "User",
     index: true,
     required: true,
-  }
+  },
 })
 
 module.exports = mongoose.model("Record", recordSchema)

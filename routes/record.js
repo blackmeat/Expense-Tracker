@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const Record = require("../models/record")
+const moment = require("moment")
 const { authenticated } = require("../config/auth")
 
 // 瀏覽所有支出項目
@@ -10,7 +11,9 @@ router.get("/", authenticated, (req, res) => {
 
 // 新增支出項目頁面
 router.get("/new", authenticated, (req, res) => {
-  res.render("new")
+  const today = moment().format('YYYY-MM-DD')
+  const records = { date: today }
+  res.render("new", { records: records })
 })
 // 新增支出項目
 router.post("/", authenticated, (req, res) => {
@@ -22,6 +25,7 @@ router.post("/", authenticated, (req, res) => {
     date: req.body.date,
     userId: req.user._id
   })
+  console.log(record)
   record.save(err => {
     if (err) return console.error(err)
     return res.redirect("/")

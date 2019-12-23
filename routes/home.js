@@ -11,7 +11,13 @@ router.get("/", authenticated, (req, res) => {
     .sort({ name: "asc" })
     .exec((err, records) => {
       if (err) return console.error(err)
-      return res.render("index", { records: records })
+      // 總金額
+      let totalMoney = 0
+      if (records.length > 0) {
+        totalMoney = records.map(records => records.money).reduce((a, b) => a + b)
+      }
+
+      return res.render("index", { records: records, totalMoney: totalMoney })
     })
 })
 

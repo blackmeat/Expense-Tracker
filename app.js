@@ -21,6 +21,8 @@ const methodOverride = require("method-override")
 const session = require("express-session")
 // 載入passport模組 （登入驗證）
 const passport = require("passport")
+// 載入connect-flash模組（給使用者提示）
+const flash = require("connect-flash")
 
 
 // mongoose 連線設定
@@ -57,11 +59,20 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 require("./config/passport")(passport)
+
+// connect-flash 設定
+app.use(flash())
+
 app.use((req, res, next) => {
   res.locals.user = req.user
   res.locals.isAuthenticated = req.isAuthenticated()
+  // 新增兩個 flash message 變數 
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
+
+
 
 
 // 路由設定
