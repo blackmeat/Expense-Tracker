@@ -1,5 +1,10 @@
 // 載入express模組
 const express = require("express")
+// 如果不是 production 模式
+if (process.env.NODE_ENV !== 'production') {
+  // 使用 dotenv 讀取 .env 檔案
+  require('dotenv').config()
+}
 const app = express()
 const port = 3000
 // 載入mongoose模組 (與資料庫連結)
@@ -63,6 +68,7 @@ app.use((req, res, next) => {
 app.use("/", require("./routes/home"))
 app.use("/records", require("./routes/record"))
 app.use("/users", require("./routes/user"))
+app.use("/auth", require("./routes/auths"))
 
 
 
