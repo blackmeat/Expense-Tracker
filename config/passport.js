@@ -1,5 +1,6 @@
 const LocalStrategy = require("passport-local").Strategy
 const FacebookStrategy = require("passport-facebook").Strategy
+const GoogleStrategy = require('passport-google-oauth20').Strategy
 const mongoose = require("mongoose")
 const User = require("../models/user")
 const bcrypt = require("bcryptjs")
@@ -22,7 +23,8 @@ module.exports = passport => {
           }
         })
       })
-    }))
+    })
+  )
   // password-facebook
   passport.use(
     new FacebookStrategy({
@@ -50,8 +52,37 @@ module.exports = passport => {
           return done(null, user)
         }
       })
-    }
-    ))
+    })
+  )
+  // google
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: "879798476387-66p53qdm4tg6p4d75jv7o32mh7sepij2.apps.googleusercontent.com",
+        clientSecret: "kqZusT7i6dNCtLpnIiOuQf0A",
+        callbackURL: "http:/localhost:3000/auth/google/callback"
+      }, (accessToken, refreshToken, profile, done) => {
+        User.findOne({ email: profile._json.email }).then(user => {
+          if (!user) {
+            let passwordRandom = Math.random().toString(36).slice(-8)
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(passwordRandom, salt, (err, hash) => {
+                let newUser = new User({
+                  name: profile._json.name,
+                  email: profile._json.email,
+                  password: hash
+                })
+                newUser.save().then(user => {
+                  return done(null, user)
+                })
+              })
+            })
+          } else {
+            return done(null, user)
+          }
+        })
+      })
+  )
   // Session
   passport.serializeUser((user, done) => {
     done(null, user.id)
