@@ -54,6 +54,7 @@ module.exports = passport => {
       })
     })
   )
+  /*
   // google
   passport.use(
     new GoogleStrategy(
@@ -83,6 +84,8 @@ module.exports = passport => {
         })
       })
   )
+  */
+
   // Session
   passport.serializeUser((user, done) => {
     done(null, user.id)
