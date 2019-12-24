@@ -26,7 +26,7 @@ const flash = require("connect-flash")
 
 
 // mongoose 連線設定
-mongoose.connect("mongodb://localhost/record", { useNewUrlParser: true, useCreateIndex: true })
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/record", { useNewUrlParser: true, useCreateIndex: true })
 // 連結mongodb後，透過mongoose.connection取得Connection物件
 const db = mongoose.connection
 // 連結異常
@@ -84,6 +84,6 @@ app.use("/auth", require("./routes/auths"))
 
 
 // 設置監聽啟動伺服器
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log("App is running!!")
 })
